@@ -1,0 +1,29 @@
+===========
+Apply1 Core
+===========
+
+f x
+
+---
+
+(program
+    (apply1
+        (id)
+        (id)))
+
+===============
+Apply1 Chaining
+===============
+
+f g h x
+
+---
+
+(program
+    (apply1
+        (id)
+        (apply1
+        	(id)
+          	(apply1
+            	(id)
+            	(id)))))

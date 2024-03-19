@@ -1,0 +1,10 @@
+=================
+Simple Identifier
+=================
+
+foo
+
+---
+
+(program
+    (id))

@@ -1,0 +1,67 @@
+===========
+Apply2 Core
+===========
+
+f
+	x
+
+---
+
+(program
+    (apply2
+        (id)
+        (id)))
+
+===============
+Apply2 Chaining
+===============
+
+f
+	g
+		x
+
+---
+
+(program
+    (apply2
+        (id)
+        (apply2
+        	(id)
+          	(id))))
+
+===========
+Apply2 of 3
+===========
+
+f
+	g
+	x
+
+---
+
+(program
+    (apply2
+        (id)
+        (apply3
+        	(id)
+          	(id))))
+
+=============
+Apply2 of 3-2
+=============
+
+f
+	g
+		h
+	x
+
+---
+
+(program
+    (apply2
+        (id)
+        (apply3
+        	(apply2
+         		(id)
+         		(id))
+          	(id))))
