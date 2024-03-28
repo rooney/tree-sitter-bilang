@@ -1,0 +1,121 @@
+===========================
+Simple Double-Quoted String
+===========================
+
+"lorem ipsum"
+
+---
+
+(program
+    (string
+        (litD)))
+
+=============
+Interpolation
+=============
+
+"lorem `{f x} ipsum"
+
+---
+
+(program
+    (string
+        (litD)
+        (interp
+            (apply1
+                (id)
+                (id)))
+        (litD)))
+
+===============
+Interpolception
+===============
+
+"lorem `{f "`{g x}"} ipsum"
+
+---
+
+(program
+    (string
+        (litD)
+        (interp
+            (apply1
+                (id)
+                (string
+                    (interp
+                    (apply1
+                        (id)
+                        (id))))))
+        (litD)))
+
+===================
+Block Interpolation
+===================
+
+"lorem`{
+	f
+		x
+} ipsum"
+
+---
+
+(program
+    (string
+        (litD)
+        (interp
+            (program
+            (apply2
+                (id)
+                (id))))
+        (litD)))
+
+=====================
+Block Interpolception
+=====================
+
+"`{"`{
+	f
+		x
+}"}"
+
+---
+
+(program
+	(string
+		(interp
+			(string
+        		(interp
+          			(program
+             			(apply2
+                			(id)
+                   			(id))))))))
+
+================
+No Interpolation
+================
+
+"lorem `f x` ipsum"
+
+---
+
+(program
+    (string
+    	(litD)
+    	(litD)
+    	(litD)
+    	(litD)
+        (litD)))
+
+===============
+Uninterpolation
+===============
+
+"lorem`{
+} ipsum"
+
+---
+
+(program
+    (string
+        (litD)
+        (litD)))
