@@ -3,8 +3,8 @@
 #include <stdint.h>
 #include <string.h>
 
-enum TokenType { INDENT, DEDENT, NEWLINE, SENTINEL };
-const char *token_names[3] = {"INDENT", "DEDENT", "NEWLINE"};
+enum TokenType { INDENT, DEDENT, BREAK, SENTINEL };
+const char *token_names[3] = {"INDENT", "DEDENT", "BREAK"};
 
 void *tree_sitter_bilang_external_scanner_create() {
   return ts_calloc(1, sizeof(uint32_t));
@@ -44,10 +44,10 @@ bool tree_sitter_bilang_external_scanner_scan(void *payload, TSLexer *lexer,
   uint32_t col = lexer->get_column(lexer);
   uint32_t lookahead = lexer->lookahead;
 
-  LOG("scan %d level:%d col:%d expecting indent:%d dedent:%d newline:%d "
+  LOG("scan %d level:%d col:%d expecting indent:%d dedent:%d break:%d "
       "sentinel:%d",
       lexer->lookahead, *level, col, valid_symbols[INDENT],
-      valid_symbols[DEDENT], valid_symbols[NEWLINE], valid_symbols[SENTINEL]);
+      valid_symbols[DEDENT], valid_symbols[BREAK], valid_symbols[SENTINEL]);
 
   if (valid_symbols[SENTINEL]) {
     return decline(lexer, "(recovery mode)");
@@ -63,8 +63,8 @@ bool tree_sitter_bilang_external_scanner_scan(void *payload, TSLexer *lexer,
     (*level)++;
     return result_symbol(lexer, INDENT);
   }
-  if (*level == col && valid_symbols[NEWLINE]) {
-    return result_symbol(lexer, NEWLINE);
+  if (*level == col && valid_symbols[BREAK]) {
+    return result_symbol(lexer, BREAK);
   }
   return decline(lexer, "(other)");
 }

@@ -12,11 +12,11 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_feed"
+                  "name": "_linefeed"
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "_newline"
+                  "name": "_break"
                 }
               ]
             },
@@ -79,7 +79,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_feed"
+          "name": "_linefeed"
         }
       ]
     },
@@ -92,7 +92,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_newline"
+          "name": "_break"
         },
         {
           "type": "SYMBOL",
@@ -113,7 +113,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "_newline"
+          "name": "_break"
         },
         {
           "type": "SYMBOL",
@@ -156,52 +156,127 @@
       ]
     },
     "string": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "\""
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "texdquo"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "interpol8"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_linesplit"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "STRING",
+              "value": "\""
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "\""
+            },
+            {
+              "type": "SYMBOL",
+              "name": "linefeed"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "blockquoted"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "_break"
+            },
+            {
+              "type": "STRING",
+              "value": "\""
+            }
+          ]
+        }
+      ]
+    },
+    "blockquoted": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "\""
+          "type": "SYMBOL",
+          "name": "_indent"
         },
         {
-          "type": "REPEAT",
+          "type": "REPEAT1",
           "content": {
             "type": "CHOICE",
             "members": [
               {
                 "type": "SYMBOL",
-                "name": "litD"
+                "name": "blockquoted"
               },
               {
-                "type": "SYMBOL",
-                "name": "interp"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "_uninterp"
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_break"
+                  },
+                  {
+                    "type": "REPEAT1",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "texline"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "interpol8"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "_linesplit"
+                        }
+                      ]
+                    }
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "linefeed"
+                  }
+                ]
               }
             ]
           }
         },
         {
-          "type": "STRING",
-          "value": "\""
+          "type": "SYMBOL",
+          "name": "_dedent"
         }
       ]
     },
-    "litD": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "`"
-        },
-        {
-          "type": "PATTERN",
-          "value": "[^\"`\\\\\\r\\n]+"
-        }
-      ]
-    },
-    "interp": {
+    "interpol8": {
       "type": "SEQ",
       "members": [
         {
@@ -220,7 +295,7 @@
               "members": [
                 {
                   "type": "SYMBOL",
-                  "name": "_feed"
+                  "name": "_linefeed"
                 },
                 {
                   "type": "SYMBOL",
@@ -228,7 +303,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "_newline"
+                  "name": "_break"
                 },
                 {
                   "type": "SYMBOL",
@@ -248,20 +323,73 @@
         }
       ]
     },
-    "_uninterp": {
-      "type": "SEQ",
+    "rawline": {
+      "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "`{"
+          "type": "PATTERN",
+          "value": "[^\\r\\n]+"
+        }
+      ]
+    },
+    "texline": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^\\r\\n`]+"
         },
         {
-          "type": "SYMBOL",
-          "name": "_feed"
+          "type": "STRING",
+          "value": "`"
+        }
+      ]
+    },
+    "rawsquo": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^\\r\\n']+"
+        }
+      ]
+    },
+    "texdquo": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^\\r\\n`\"]+"
         },
         {
           "type": "STRING",
-          "value": "}"
+          "value": "`"
+        }
+      ]
+    },
+    "texbrkt": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^\\r\\n`(){}\\[\\]]+"
+        },
+        {
+          "type": "STRING",
+          "value": "`"
+        }
+      ]
+    },
+    "texword": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^\\r\\n`(){}\\[\\] ,\\t]+"
+        },
+        {
+          "type": "STRING",
+          "value": "`"
         }
       ]
     },
@@ -273,9 +401,34 @@
       "type": "PATTERN",
       "value": "[ \\t]+"
     },
-    "_feed": {
+    "_linefeed": {
       "type": "PATTERN",
       "value": "([ \\t]*\\r?\\n)+\\t*"
+    },
+    "linefeed": {
+      "type": "SYMBOL",
+      "name": "_linefeed"
+    },
+    "_linesplit": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "`{"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_linefeed"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_break"
+        },
+        {
+          "type": "STRING",
+          "value": "}"
+        }
+      ]
     }
   },
   "extras": [],
@@ -292,7 +445,7 @@
     },
     {
       "type": "SYMBOL",
-      "name": "_newline"
+      "name": "_break"
     },
     {
       "type": "SYMBOL",

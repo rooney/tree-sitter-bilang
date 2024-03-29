@@ -85,7 +85,34 @@
     }
   },
   {
-    "type": "interp",
+    "type": "blockquoted",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "blockquoted",
+          "named": true
+        },
+        {
+          "type": "interpol8",
+          "named": true
+        },
+        {
+          "type": "linefeed",
+          "named": true
+        },
+        {
+          "type": "texline",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "interpol8",
     "named": true,
     "fields": {},
     "children": {
@@ -112,7 +139,7 @@
     }
   },
   {
-    "type": "litD",
+    "type": "linefeed",
     "named": true,
     "fields": {}
   },
@@ -156,15 +183,33 @@
       "required": false,
       "types": [
         {
-          "type": "interp",
+          "type": "blockquoted",
           "named": true
         },
         {
-          "type": "litD",
+          "type": "interpol8",
+          "named": true
+        },
+        {
+          "type": "linefeed",
+          "named": true
+        },
+        {
+          "type": "texdquo",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "texdquo",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "texline",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "\"",

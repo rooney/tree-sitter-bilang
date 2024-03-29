@@ -1,5 +1,5 @@
 ===========================
-Simple Double-Quoted String
+Simple Double-texdquo String
 ===========================
 
 "lorem ipsum"
@@ -8,7 +8,35 @@ Simple Double-Quoted String
 
 (program
     (string
-        (litD)))
+        (texdquo)))
+
+==============================
+Multiline Double-texdquo String
+==============================
+
+"
+		Lorem ipsum
+		-----------
+
+	dolor sit amet, consec-
+	tetur adipiscing elit
+"
+
+---
+
+(program
+    (string
+    	(linefeed)
+    	(blockquoted
+      	   	(blockquoted
+          		(texline)
+           		(linefeed)
+             	(texline)
+             	(linefeed))
+          	(texline)
+           (linefeed)
+           (texline)
+           (linefeed))))
 
 =============
 Interpolation
@@ -20,12 +48,12 @@ Interpolation
 
 (program
     (string
-        (litD)
-        (interp
+        (texdquo)
+        (interpol8
             (apply1
                 (id)
                 (id)))
-        (litD)))
+        (texdquo)))
 
 ===============
 Interpolception
@@ -37,19 +65,19 @@ Interpolception
 
 (program
     (string
-        (litD)
-        (interp
+        (texdquo)
+        (interpol8
             (apply1
                 (id)
                 (string
-                    (interp
+                    (interpol8
                     (apply1
                         (id)
                         (id))))))
-        (litD)))
+        (texdquo)))
 
 ===================
-Block Interpolation
+Block interpolation
 ===================
 
 "lorem`{
@@ -61,16 +89,16 @@ Block Interpolation
 
 (program
     (string
-        (litD)
-        (interp
+        (texdquo)
+        (interpol8
             (program
             (apply2
                 (id)
                 (id))))
-        (litD)))
+        (texdquo)))
 
 =====================
-Block Interpolception
+Block interpolception
 =====================
 
 "`{"`{
@@ -82,16 +110,47 @@ Block Interpolception
 
 (program
 	(string
-		(interp
+		(interpol8
 			(string
-        		(interp
+        		(interpol8
           			(program
              			(apply2
                 			(id)
                    			(id))))))))
 
+=======================
+Multiline interpolation
+=======================
+
+"
+	lorem`{
+		f x
+			y
+		z
+	} ipsum
+"
+
+---
+
+(program
+    (string
+    	(linefeed)
+	    (blockquoted
+	    	(texline)
+	       	(interpol8
+	        	(program
+	          		(apply3
+	            		(apply2
+	              			(apply1
+	                 			(id)
+	                    		(id))
+	                 		(id))
+	              		(id))))
+	        (texline)
+	        (linefeed))))
+
 ================
-No Interpolation
+No interpolation
 ================
 
 "lorem `f x` ipsum"
@@ -100,15 +159,15 @@ No Interpolation
 
 (program
     (string
-    	(litD)
-    	(litD)
-    	(litD)
-    	(litD)
-        (litD)))
+    	(texdquo)
+    	(texdquo)
+    	(texdquo)
+    	(texdquo)
+        (texdquo)))
 
-===============
-Uninterpolation
-===============
+==============
+Line splitting
+==============
 
 "lorem`{
 } ipsum"
@@ -117,5 +176,5 @@ Uninterpolation
 
 (program
     (string
-        (litD)
-        (litD)))
+        (texdquo)
+        (texdquo)))
