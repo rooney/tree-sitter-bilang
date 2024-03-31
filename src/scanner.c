@@ -26,7 +26,7 @@ void tree_sitter_bilang_external_scanner_deserialize(void *payload,
   memcpy(payload, buffer, length);
 }
 
-#define LOG(...) lexer->log(lexer, __VA_ARGS__)
+#define LOG(...) // lexer->log(lexer, __VA_ARGS__)
 static inline bool result_symbol(TSLexer *lexer, enum TokenType tt) {
   LOG(token_names[tt]);
   lexer->result_symbol = tt;

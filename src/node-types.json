@@ -85,6 +85,29 @@
     }
   },
   {
+    "type": "applyi",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "applyi",
+          "named": true
+        },
+        {
+          "type": "id",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "blockquoted",
     "named": true,
     "fields": {},
@@ -120,7 +143,7 @@
       "required": true,
       "types": [
         {
-          "type": "apply1",
+          "type": "applyi",
           "named": true
         },
         {

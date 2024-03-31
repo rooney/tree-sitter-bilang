@@ -38,6 +38,20 @@ Multiline Double-quoted String
            (stx_line)
            (linefeed))))
 
+==============
+Line splitting
+==============
+
+"lorem`{
+} ipsum"
+
+---
+
+(program
+    (string
+        (stx_dquo)
+        (stx_dquo)))
+
 =======================
 Pseudo-multiline String
 =======================
@@ -71,7 +85,7 @@ Interpolation
     (string
         (stx_dquo)
         (interpol8
-            (apply1
+            (applyi
                 (id)
                 (id)))
         (stx_dquo)))
@@ -88,11 +102,11 @@ Interpolception
     (string
         (stx_dquo)
         (interpol8
-            (apply1
+            (applyi
                 (id)
                 (string
                     (interpol8
-                    (apply1
+                    (applyi
                         (id)
                         (id))))))
         (stx_dquo)))
@@ -145,9 +159,9 @@ Multiline interpolation
 
 "
 	lorem`{
-		f x
-			y
-		z
+		f g
+			x
+		y
 	} ipsum
 "
 
@@ -162,10 +176,10 @@ Multiline interpolation
 	        	(program
 	          		(apply3
 	            		(apply2
-	              			(apply1
+                            (id)
+	              			(apply2
 	                 			(id)
-	                    		(id))
-	                 		(id))
+	                    		(id)))
 	              		(id))))
 	        (stx_line)
 	        (linefeed))))
@@ -184,18 +198,4 @@ No interpolation
     	(stx_dquo)
     	(stx_dquo)
     	(stx_dquo)
-        (stx_dquo)))
-
-==============
-Line splitting
-==============
-
-"lorem`{
-} ipsum"
-
----
-
-(program
-    (string
-        (stx_dquo)
         (stx_dquo)))

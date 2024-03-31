@@ -16,6 +16,24 @@ f
 Apply2 Chaining
 ===============
 
+f g h
+	x
+
+---
+
+(program
+    (apply2
+        (id)
+        (apply2
+            (id)
+            (apply2
+                (id)
+                (id)))))
+
+=====================
+Apply2 Block-chaining
+=====================
+
 f
 	g
 		x

@@ -6,12 +6,17 @@ module.exports = grammar({
   rules: {
     program: ($) => seq(optional(seq($._linefeed, $._break)), $._expr3),
     _expr3: ($) => choice($.apply3, $._expr2),
-    _expr2: ($) => choice($.apply2, $._exprL),
-    _expr1: ($) => choice($.apply1, $._e),
-    _exprL: ($) => seq($._expr1, $._linefeed),
+    _expr2: ($) => choice($.apply2, $._expr1),
+    _expr1: ($) => choice($.apply1, seq($._e, $._linefeed)),
+    _expri: ($) => choice($.applyi, $._e),
     apply3: ($) => seq($._expr2, $._break, $._expr3),
-    apply2: ($) => seq($._exprL, $._indent, $._break, $._expr3, $._dedent),
+    apply2: ($) =>
+      choice(
+        seq($._e, $._linefeed, $._indent, $._break, $._expr3, $._dedent),
+        seq($._e, $._space, $.apply2),
+      ),
     apply1: ($) => seq($._e, $._space, $._expr1),
+    applyi: ($) => seq($._e, $._space, $._expri),
     _e: ($) => choice($.id, $.string),
     string: ($) =>
       choice(
@@ -47,7 +52,7 @@ module.exports = grammar({
         ),
         $._dedent,
       ),
-    interpol8: ($) => seq("`{", choice($._codeblock, $._expr1), "}"),
+    interpol8: ($) => seq("`{", choice($._codeblock, $._expri), "}"),
     interpolB: ($) => seq(" `", $._codeblock),
 
     _codeblock: ($) =>
@@ -74,5 +79,15 @@ module.exports = grammar({
     rbracket: () => "]",
   },
   extras: () => [],
+  inline: () => [
+    // $._expri,
+    // $._expr1,
+    // $._expr2,
+    // $._expr3,
+    // $._e,
+    // $._codeblock,
+    // $._stx_words,
+    // $._stx_group,
+  ],
   externals: ($) => [$._indent, $._dedent, $._break, $._sentinel],
 });
