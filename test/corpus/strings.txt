@@ -1,5 +1,5 @@
 ===========================
-Simple Double-texdquo String
+Simple Double-quoted String
 ===========================
 
 "lorem ipsum"
@@ -8,10 +8,10 @@ Simple Double-texdquo String
 
 (program
     (string
-        (texdquo)))
+        (stx_dquo)))
 
 ==============================
-Multiline Double-texdquo String
+Multiline Double-quoted String
 ==============================
 
 "
@@ -29,14 +29,35 @@ Multiline Double-texdquo String
     	(linefeed)
     	(blockquoted
       	   	(blockquoted
-          		(texline)
+          		(stx_line)
            		(linefeed)
-             	(texline)
+             	(stx_line)
              	(linefeed))
-          	(texline)
+          	(stx_line)
            (linefeed)
-           (texline)
+           (stx_line)
            (linefeed))))
+
+=======================
+Pseudo-multiline String
+=======================
+
+"
+	actually`{
+	} one`{
+	} liner
+"
+
+---
+
+(program
+	(string
+        (linefeed)
+        (blockquoted
+          (stx_line)
+          (stx_line)
+          (stx_line)
+          (linefeed))))
 
 =============
 Interpolation
@@ -48,12 +69,12 @@ Interpolation
 
 (program
     (string
-        (texdquo)
+        (stx_dquo)
         (interpol8
             (apply1
                 (id)
                 (id)))
-        (texdquo)))
+        (stx_dquo)))
 
 ===============
 Interpolception
@@ -65,7 +86,7 @@ Interpolception
 
 (program
     (string
-        (texdquo)
+        (stx_dquo)
         (interpol8
             (apply1
                 (id)
@@ -74,7 +95,7 @@ Interpolception
                     (apply1
                         (id)
                         (id))))))
-        (texdquo)))
+        (stx_dquo)))
 
 ===================
 Block interpolation
@@ -89,13 +110,13 @@ Block interpolation
 
 (program
     (string
-        (texdquo)
+        (stx_dquo)
         (interpol8
             (program
             (apply2
                 (id)
                 (id))))
-        (texdquo)))
+        (stx_dquo)))
 
 =====================
 Block interpolception
@@ -136,7 +157,7 @@ Multiline interpolation
     (string
     	(linefeed)
 	    (blockquoted
-	    	(texline)
+	    	(stx_line)
 	       	(interpol8
 	        	(program
 	          		(apply3
@@ -146,7 +167,7 @@ Multiline interpolation
 	                    		(id))
 	                 		(id))
 	              		(id))))
-	        (texline)
+	        (stx_line)
 	        (linefeed))))
 
 ================
@@ -159,11 +180,11 @@ No interpolation
 
 (program
     (string
-    	(texdquo)
-    	(texdquo)
-    	(texdquo)
-    	(texdquo)
-        (texdquo)))
+    	(stx_dquo)
+    	(stx_dquo)
+    	(stx_dquo)
+    	(stx_dquo)
+        (stx_dquo)))
 
 ==============
 Line splitting
@@ -176,5 +197,5 @@ Line splitting
 
 (program
     (string
-        (texdquo)
-        (texdquo)))
+        (stx_dquo)
+        (stx_dquo)))

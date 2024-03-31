@@ -15,9 +15,23 @@ module.exports = grammar({
     _e: ($) => choice($.id, $.string),
     string: ($) =>
       choice(
-        seq('"', repeat(choice($.texdquo, $.interpol8, $._linesplit)), '"'),
+        seq('"', repeat(choice($.stx_dquo, $.interpol8, $._linesplit)), '"'),
         seq('"', $.linefeed, $.blockquoted, $._break, '"'),
+        seq("`", choice($._stx_words, $._stx_group)),
+        seq("` ", repeat1(choice($.stx_line, $.interpol8, $._linesplit))),
       ),
+    _stx_words: ($) =>
+      seq($.stx_word, repeat1(choice($.stx_word, $.interpol8, $._linesplit))),
+    _stx_group: ($) => {
+      let blocs = repeat(
+        choice($._stx_group, $.stx_bloc, $.interpol8, $._linesplit),
+      );
+      return choice(
+        seq($.lparen, blocs, $.rparen),
+        seq($.lbrace, blocs, $.rbrace),
+        seq($.lbracket, blocs, $.rbracket),
+      );
+    },
     blockquoted: ($) =>
       seq(
         $._indent,
@@ -26,33 +40,38 @@ module.exports = grammar({
             $.blockquoted,
             seq(
               $._break,
-              repeat1(choice($.texline, $.interpol8, $._linesplit)),
+              repeat1(choice($.stx_line, $.interpol8, $._linesplit)),
               $.linefeed,
             ),
           ),
         ),
         $._dedent,
       ),
-    interpol8: ($) =>
-      seq(
-        "`{",
-        choice(
-          $._expr1,
-          seq($._linefeed, $._indent, $._break, $.program, $._dedent),
-        ),
-        "}",
-      ),
-    rawline: () => choice(/[^\r\n]+/),
-    texline: () => choice(/[^\r\n`]+/, "`"),
-    rawsquo: () => choice(/[^\r\n']+/),
-    texdquo: () => choice(/[^\r\n`"]+/, "`"),
-    texbrkt: () => choice(/[^\r\n`(){}\[\]]+/, "`"),
-    texword: () => choice(/[^\r\n`(){}\[\] ,\t]+/, "`"),
+    interpol8: ($) => seq("`{", choice($._codeblock, $._expr1), "}"),
+    interpolB: ($) => seq(" `", $._codeblock),
+
+    _codeblock: ($) =>
+      seq($._linefeed, $._indent, $._break, $.program, $._dedent),
+
+    // str: raw; stx: expandable (interpolation)
+    str_line: () => choice(/[^\r\n]+/),
+    stx_line: () => choice(/[^\r\n`]+/, "`"),
+    str_squo: () => choice(/[^\r\n']+/),
+    stx_dquo: () => choice(/[^\r\n`"]+/, "`"),
+    stx_bloc: () => choice(/[^\r\n`(){}\[\]]+/, "`"),
+    stx_word: () => choice(/[^\r\n`(){}\[\] ,\t]+/, "`"),
     id: () => /[a-z]+/,
     _space: () => /[ \t]+/,
     _linefeed: () => /([ \t]*\r?\n)+\t*/,
     linefeed: ($) => $._linefeed,
     _linesplit: ($) => seq("`{", $._linefeed, $._break, "}"),
+
+    lparen: () => "(",
+    rparen: () => ")",
+    lbrace: () => "{",
+    rbrace: () => "}",
+    lbracket: () => "[",
+    rbracket: () => "]",
   },
   extras: () => [],
   externals: ($) => [$._indent, $._dedent, $._break, $._sentinel],

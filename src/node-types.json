@@ -105,7 +105,7 @@
           "named": true
         },
         {
-          "type": "texline",
+          "type": "stx_line",
           "named": true
         }
       ]
@@ -175,6 +175,11 @@
     }
   },
   {
+    "type": "rbrace",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "string",
     "named": true,
     "fields": {},
@@ -191,25 +196,75 @@
           "named": true
         },
         {
+          "type": "lbrace",
+          "named": true
+        },
+        {
+          "type": "lbracket",
+          "named": true
+        },
+        {
           "type": "linefeed",
           "named": true
         },
         {
-          "type": "texdquo",
+          "type": "lparen",
+          "named": true
+        },
+        {
+          "type": "rbrace",
+          "named": true
+        },
+        {
+          "type": "rbracket",
+          "named": true
+        },
+        {
+          "type": "rparen",
+          "named": true
+        },
+        {
+          "type": "stx_bloc",
+          "named": true
+        },
+        {
+          "type": "stx_dquo",
+          "named": true
+        },
+        {
+          "type": "stx_line",
+          "named": true
+        },
+        {
+          "type": "stx_word",
           "named": true
         }
       ]
     }
   },
   {
-    "type": "texdquo",
+    "type": "stx_bloc",
     "named": true,
     "fields": {}
   },
   {
-    "type": "texline",
+    "type": "stx_dquo",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "stx_line",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "stx_word",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": " `",
+    "named": false
   },
   {
     "type": "\"",
@@ -220,11 +275,35 @@
     "named": false
   },
   {
+    "type": "` ",
+    "named": false
+  },
+  {
     "type": "`{",
     "named": false
   },
   {
     "type": "id",
+    "named": true
+  },
+  {
+    "type": "lbrace",
+    "named": true
+  },
+  {
+    "type": "lbracket",
+    "named": true
+  },
+  {
+    "type": "lparen",
+    "named": true
+  },
+  {
+    "type": "rbracket",
+    "named": true
+  },
+  {
+    "type": "rparen",
     "named": true
   },
   {

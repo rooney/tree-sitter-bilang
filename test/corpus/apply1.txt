@@ -23,7 +23,28 @@ f g h x
     (apply1
         (id)
         (apply1
-        	(id)
-          	(apply1
-            	(id)
-            	(id)))))
+            (id)
+                (apply1
+                    (id)
+                    (id)))))
+
+=================
+Multi-line Apply1
+=================
+
+f "
+	lorem ipsum
+" x
+
+---
+
+(program
+    (apply1
+        (id)
+        (apply1
+            (string
+                (linefeed)
+                (blockquoted
+                    (stx_line)
+                    (linefeed)))
+            (id))))

@@ -172,7 +172,7 @@
                 "members": [
                   {
                     "type": "SYMBOL",
-                    "name": "texdquo"
+                    "name": "stx_dquo"
                   },
                   {
                     "type": "SYMBOL",
@@ -215,6 +215,202 @@
               "value": "\""
             }
           ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "`"
+            },
+            {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_stx_words"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_stx_group"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "` "
+            },
+            {
+              "type": "REPEAT1",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "stx_line"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "interpol8"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_linesplit"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "_stx_words": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "stx_word"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "stx_word"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "interpol8"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_linesplit"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "_stx_group": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "lparen"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_stx_group"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "stx_bloc"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "interpol8"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_linesplit"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "rparen"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "lbrace"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_stx_group"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "stx_bloc"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "interpol8"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_linesplit"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "rbrace"
+            }
+          ]
+        },
+        {
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "lbracket"
+            },
+            {
+              "type": "REPEAT",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_stx_group"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "stx_bloc"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "interpol8"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_linesplit"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "SYMBOL",
+              "name": "rbracket"
+            }
+          ]
         }
       ]
     },
@@ -248,7 +444,7 @@
                       "members": [
                         {
                           "type": "SYMBOL",
-                          "name": "texline"
+                          "name": "stx_line"
                         },
                         {
                           "type": "SYMBOL",
@@ -288,32 +484,11 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_expr1"
+              "name": "_codeblock"
             },
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_linefeed"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_indent"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_break"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "program"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "_dedent"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "_expr1"
             }
           ]
         },
@@ -323,7 +498,45 @@
         }
       ]
     },
-    "rawline": {
+    "interpolB": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": " `"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_codeblock"
+        }
+      ]
+    },
+    "_codeblock": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "_linefeed"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_indent"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_break"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "program"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_dedent"
+        }
+      ]
+    },
+    "str_line": {
       "type": "CHOICE",
       "members": [
         {
@@ -332,7 +545,7 @@
         }
       ]
     },
-    "texline": {
+    "stx_line": {
       "type": "CHOICE",
       "members": [
         {
@@ -345,7 +558,7 @@
         }
       ]
     },
-    "rawsquo": {
+    "str_squo": {
       "type": "CHOICE",
       "members": [
         {
@@ -354,7 +567,7 @@
         }
       ]
     },
-    "texdquo": {
+    "stx_dquo": {
       "type": "CHOICE",
       "members": [
         {
@@ -367,7 +580,7 @@
         }
       ]
     },
-    "texbrkt": {
+    "stx_bloc": {
       "type": "CHOICE",
       "members": [
         {
@@ -380,7 +593,7 @@
         }
       ]
     },
-    "texword": {
+    "stx_word": {
       "type": "CHOICE",
       "members": [
         {
@@ -429,6 +642,30 @@
           "value": "}"
         }
       ]
+    },
+    "lparen": {
+      "type": "STRING",
+      "value": "("
+    },
+    "rparen": {
+      "type": "STRING",
+      "value": ")"
+    },
+    "lbrace": {
+      "type": "STRING",
+      "value": "{"
+    },
+    "rbrace": {
+      "type": "STRING",
+      "value": "}"
+    },
+    "lbracket": {
+      "type": "STRING",
+      "value": "["
+    },
+    "rbracket": {
+      "type": "STRING",
+      "value": "]"
     }
   },
   "extras": [],
