@@ -15,8 +15,8 @@ Multiline Double-quoted String
 ==============================
 
 "
-		Lorem ipsum
-		-----------
+		"Lorem ipsum"
+		-------------
 
 	dolor sit amet, consec-
 	tetur adipiscing elit
@@ -26,17 +26,17 @@ Multiline Double-quoted String
 
 (program
     (string
-    	(linefeed)
-    	(blockquoted
-      	   	(blockquoted
-          		(stx_line)
-           		(linefeed)
-             	(stx_line)
-             	(linefeed))
-          	(stx_line)
-           (linefeed)
-           (stx_line)
-           (linefeed))))
+        (linefeed)
+        (strblock
+            (strblock
+                (stx_line)
+                (linefeed)
+                (stx_line)
+                (linefeed))
+            (stx_line)
+            (linefeed)
+            (stx_line)
+            (linefeed))))
 
 ==============
 Line splitting
@@ -65,13 +65,13 @@ Pseudo-multiline String
 ---
 
 (program
-	(string
+    (string
         (linefeed)
-        (blockquoted
-          (stx_line)
-          (stx_line)
-          (stx_line)
-          (linefeed))))
+        (strblock
+            (stx_line)
+            (stx_line)
+            (stx_line)
+            (linefeed))))
 
 =============
 Interpolation
@@ -84,7 +84,7 @@ Interpolation
 (program
     (string
         (stx_dquo)
-        (interpol8
+        (interpolA
             (applyi
                 (id)
                 (id)))
@@ -101,11 +101,11 @@ Interpolception
 (program
     (string
         (stx_dquo)
-        (interpol8
+        (interpolA
             (applyi
                 (id)
                 (string
-                    (interpol8
+                    (interpolA
                     (applyi
                         (id)
                         (id))))))
@@ -125,7 +125,7 @@ Block interpolation
 (program
     (string
         (stx_dquo)
-        (interpol8
+        (interpolA
             (program
             (apply2
                 (id)
@@ -144,14 +144,14 @@ Block interpolception
 ---
 
 (program
-	(string
-		(interpol8
-			(string
-        		(interpol8
-          			(program
-             			(apply2
-                			(id)
-                   			(id))))))))
+    (string
+        (interpolA
+            (string
+                (interpolA
+                    (program
+                        (apply2
+                            (id)
+                            (id))))))))
 
 =======================
 Multiline interpolation
@@ -169,33 +169,33 @@ Multiline interpolation
 
 (program
     (string
-    	(linefeed)
-	    (blockquoted
-	    	(stx_line)
-	       	(interpol8
-	        	(program
-	          		(apply3
-	            		(apply2
+        (linefeed)
+        (strblock
+            (stx_line)
+            (interpolA
+                (program
+                    (apply3
+                        (apply2
                             (id)
-	              			(apply2
-	                 			(id)
-	                    		(id)))
-	              		(id))))
-	        (stx_line)
-	        (linefeed))))
+                            (apply2
+                                (id)
+                                (id)))
+                        (id))))
+            (stx_line)
+            (linefeed))))
 
 ================
 No interpolation
 ================
 
-"lorem `f x` ipsum"
+"lorem ipsum `dolor` sit amet"
 
 ---
 
 (program
     (string
-    	(stx_dquo)
-    	(stx_dquo)
-    	(stx_dquo)
-    	(stx_dquo)
+        (stx_dquo)
+        (stx_dquo)
+        (stx_dquo)
+        (stx_dquo)
         (stx_dquo)))

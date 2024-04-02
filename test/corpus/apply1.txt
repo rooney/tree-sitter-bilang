@@ -44,7 +44,7 @@ f "
         (apply1
             (string
                 (linefeed)
-                (blockquoted
+                (strblock
                     (stx_line)
                     (linefeed)))
             (id))))
