@@ -287,6 +287,16 @@
     }
   },
   {
+    "type": "str_line",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "str_squo",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "strblock",
     "named": true,
     "fields": {},
@@ -295,19 +305,15 @@
       "required": true,
       "types": [
         {
-          "type": "interpolA",
-          "named": true
-        },
-        {
           "type": "linefeed",
           "named": true
         },
         {
-          "type": "strblock",
+          "type": "str_line",
           "named": true
         },
         {
-          "type": "stx_line",
+          "type": "strblock",
           "named": true
         }
       ]
@@ -330,6 +336,10 @@
           "named": true
         },
         {
+          "type": "str_squo",
+          "named": true
+        },
+        {
           "type": "strblock",
           "named": true
         },
@@ -347,6 +357,10 @@
         },
         {
           "type": "stx_word",
+          "named": true
+        },
+        {
+          "type": "stxblock",
           "named": true
         }
       ]
@@ -388,7 +402,38 @@
     "fields": {}
   },
   {
+    "type": "stxblock",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "interpolA",
+          "named": true
+        },
+        {
+          "type": "linefeed",
+          "named": true
+        },
+        {
+          "type": "stx_line",
+          "named": true
+        },
+        {
+          "type": "stxblock",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "\"",
+    "named": false
+  },
+  {
+    "type": "'",
     "named": false
   },
   {

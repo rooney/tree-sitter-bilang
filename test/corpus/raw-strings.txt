@@ -1,0 +1,43 @@
+=================
+Simple Raw String
+=================
+
+'lorem ipsum "dolor" sit amet'
+
+---
+
+(program
+    (string
+        (str_squo)))
+
+=====================
+Multi-line Raw String
+=====================
+
+'
+	lorem's ipsum:
+	dolor 'sit amet'
+'
+
+---
+
+(program
+    (string
+        (linefeed)
+        (strblock
+            (str_line)
+            (linefeed)
+            (str_line)
+            (linefeed))))
+
+================
+No interpolation
+================
+
+'lorem ipsum `{dolor} sit amet'
+
+---
+
+(program
+    (string
+        (str_squo)))

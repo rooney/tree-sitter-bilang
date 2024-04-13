@@ -1,8 +1,8 @@
-===========================
-Simple Double-quoted String
-===========================
+=============
+Simple String
+=============
 
-"lorem ipsum"
+"lorem's ipsum"
 
 ---
 
@@ -10,16 +10,16 @@ Simple Double-quoted String
     (string
         (stx_dquo)))
 
-==============================
-Multiline Double-quoted String
-==============================
+=================
+Multi-line String
+=================
 
 "
 		"Lorem ipsum"
 		-------------
 
 	dolor sit amet, consec-
-	tetur adipiscing elit
+	tetur's adipiscing elit
 "
 
 ---
@@ -27,8 +27,8 @@ Multiline Double-quoted String
 (program
     (string
         (linefeed)
-        (strblock
-            (strblock
+        (stxblock
+            (stxblock
                 (stx_line)
                 (linefeed)
                 (stx_line)
@@ -67,7 +67,7 @@ Pseudo-multiline String
 (program
     (string
         (linefeed)
-        (strblock
+        (stxblock
             (stx_line)
             (stx_line)
             (stx_line)
@@ -170,7 +170,7 @@ Multiline interpolation
 (program
     (string
         (linefeed)
-        (strblock
+        (stxblock
             (stx_line)
             (interpolA
                 (program

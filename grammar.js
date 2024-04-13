@@ -24,18 +24,26 @@ module.exports = grammar({
     string: ($) => {
       let interpolable = (x) => choice(x, $._interpol8);
       return choice(
-        seq('"', repeat(interpolable($.stx_dquo)), '"'),
-        seq("`", repeat1(interpolable($.stx_word))),
+        seq("` ", $._stxline),
         seq("`", $.stx_group),
-        seq("` ", $._strline),
-        seq('"', $.linefeed, $.strblock, $._break, '"'),
+        seq("`", repeat1(interpolable($.stx_word))),
+        seq('"', repeat(interpolable($.stx_dquo)), '"'),
+        seq("'", $.str_squo, "'"),
+        seq("'", $.linefeed, $.strblock, $._break, "'"),
+        seq('"', $.linefeed, $.stxblock, $._break, '"'),
       );
     },
-    _strline: ($) => repeat1(choice($.stx_line, $._interpol8)),
+    _stxline: ($) => repeat1(choice($.stx_line, $._interpol8)),
+    stxblock: ($) =>
+      seq(
+        $._indent,
+        repeat1(choice($.stxblock, seq($._break, $._stxline, $.linefeed))),
+        $._dedent,
+      ),
     strblock: ($) =>
       seq(
         $._indent,
-        repeat1(choice($.strblock, seq($._break, $._strline, $.linefeed))),
+        repeat1(choice($.strblock, seq($._break, $.str_line, $.linefeed))),
         $._dedent,
       ),
     _graving: ($) => choice($._graveline, $.graveblock),
@@ -67,12 +75,12 @@ module.exports = grammar({
       );
     },
     stx_group: ($) => $._stx_group,
+    _stx_grp: () => choice(/[^\r\n`(){}\[\]]+/, "`"),
     str_line: () => choice(/[^\r\n]+/),
     stx_line: () => choice(/[^\r\n`]+/, "`"),
     str_squo: () => choice(/[^\r\n']+/),
     stx_dquo: () => choice(/[^\r\n`"]+/, "`"),
     stx_word: () => choice(/[^\r\n`(){}\[\], ]+/, "`"),
-    _stx_grp: () => choice(/[^\r\n`(){}\[\]]+/, "`"),
     stx_rune: ($) =>
       choice(
         /[^\r\n ]+/,
@@ -99,7 +107,7 @@ module.exports = grammar({
     $._graving,
     $._graveline,
     $._linesplit,
-    $._strline,
+    $._stxline,
     $._stx_grp,
   ],
   externals: ($) => [$._indent, $._dedent, $._break, $._sentinel],
