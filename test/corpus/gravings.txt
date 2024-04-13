@@ -1,0 +1,234 @@
+====
+Word
+====
+
+`lorem f x
+
+---
+
+(program
+    (apply1
+    (string
+        (stx_word))
+    (apply1
+        (id)
+        (id))))
+
+=====
+Group
+=====
+
+`(lorem ipsum) f x
+
+---
+
+(program
+    (apply1
+    (string
+        (stx_group))
+    (apply1
+        (id)
+        (id))))
+
+============
+Nested Group
+============
+
+`(lorem (ipsum) dolor[sit[amet]]) f x
+
+---
+
+(program
+    (apply1
+    (string
+        (stx_group))
+    (apply1
+        (id)
+        (id))))
+
+====
+Line
+====
+
+f ` lorem ipsum, dolor sit amet
+
+---
+
+(program
+    (apply1
+    (id)
+    (string
+        (stx_line))))
+
+=======================
+Line with Interpolation
+=======================
+
+f ` lorem ipsum `{f x} sit amet
+
+---
+
+(program
+    (apply1
+    (id)
+    (string
+        (stx_line)
+        (interpolA
+            (applyi
+                (id)
+                (id)))
+        (stx_line))))
+
+==========================
+Line without Interpolation
+==========================
+
+f ` lorem ipsum `dolor` sit amet
+
+---
+
+(program
+    (apply1
+    (id)
+    (string
+        (stx_line)
+        (stx_line)
+        (stx_line)
+        (stx_line)
+        (stx_line))))
+
+======
+Grave2
+======
+
+`
+	lorem`
+		ipsum
+
+---
+
+(program
+    (grave2
+    (graveblock
+        (stx_rune)
+        (linefeed)
+        (graveblock
+            (stx_rune)
+            (linefeed)))))
+
+======
+Grave3
+======
+
+`
+lorem`
+ipsum
+
+---
+
+(program
+    (grave3
+        (stx_rune)
+        (linefeed)
+        (stx_rune)
+        (linefeed)))
+
+=========================
+Grave2 with Interpolation
+=========================
+
+`
+	`
+		f x
+	lorem `
+		g x
+
+---
+
+(program
+    (grave2
+    (graveblock
+        (interpolB
+            (program
+                (apply1
+                    (id)
+                    (id))))
+        (stx_rune)
+        (interpolB
+            (program
+                (apply1
+                    (id)
+                    (id)))))))
+
+=========================
+Grave3 with Interpolation
+=========================
+
+`
+`
+	f x
+lorem `
+	g x
+
+---
+
+(program
+    (grave3
+    (interpolB
+        (program
+            (apply1
+                (id)
+                (id))))
+    (stx_rune)
+    (interpolB
+        (program
+            (apply1
+                (id)
+                (id))))))
+
+============================
+Grave2 without Interpolation
+============================
+
+`
+	`
+	lorem`
+		ipsum `
+		dolor
+
+---
+
+(program
+    (grave2
+        (graveblock
+            (stx_rune)
+            (stx_rune)
+            (linefeed)
+            (graveblock
+                (stx_rune)
+                (stx_rune)
+                (stx_rune)
+                (linefeed)))))
+
+============================
+Grave3 without Interpolation
+============================
+
+`
+`
+lorem`
+	ipsum `
+	dolor
+
+---
+
+(program
+    (grave3
+        (stx_rune)
+        (stx_rune)
+        (linefeed)
+        (graveblock
+            (stx_rune)
+            (stx_rune)
+            (stx_rune)
+            (linefeed))))
