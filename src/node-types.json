@@ -201,6 +201,40 @@
     }
   },
   {
+    "type": "id",
+    "named": true,
+    "fields": {
+      "prefix": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "dash",
+            "named": true
+          },
+          {
+            "type": "dollar",
+            "named": true
+          }
+        ]
+      },
+      "suffix": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "prime",
+            "named": true
+          },
+          {
+            "type": "question",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "interpolA",
     "named": true,
     "fields": {},
@@ -465,7 +499,19 @@
     "named": false
   },
   {
-    "type": "id",
+    "type": "dash",
+    "named": true
+  },
+  {
+    "type": "dollar",
+    "named": true
+  },
+  {
+    "type": "prime",
+    "named": true
+  },
+  {
+    "type": "question",
     "named": true
   },
   {

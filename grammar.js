@@ -89,7 +89,17 @@ module.exports = grammar({
         seq(optional($._space), "`", $._linefeed, $._break),
       ),
 
-    id: () => /[a-z]+/,
+    id: ($) =>
+      seq(
+        optional(field("prefix", choice($.dash, $.dollar))),
+        field("basename", /[a-z][a-z0-9]*([+/-][a-z0-9]+)*/),
+        optional(field("suffix", choice($.question, $.prime))),
+      ),
+
+    question: () => /\?+'*/,
+    dollar: () => /\$+/,
+    dash: () => /-+/,
+    prime: () => /'+/,
     linefeed: ($) => $._linefeed,
     _space: () => / +/,
     _linefeed: () => /([ \t]*\r?\n)+\t*/,

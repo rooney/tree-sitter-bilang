@@ -1,5 +1,5 @@
 =================
-Simple Identifier
+Simple identifier
 =================
 
 foo
@@ -8,3 +8,156 @@ foo
 
 (program
     (id))
+
+========
+Has dash
+========
+
+--has-dash
+
+---
+
+(program
+    (id
+        (dash)))
+
+=========
+Has slash
+=========
+
+all/nothing
+
+---
+
+(program
+    (id))
+
+========
+Has plus
+========
+
+tom+jerry
+
+---
+
+(program
+    (id))
+
+===========
+Have prefix
+===========
+
+$foo $$foo $$$foo
+-bar --bar ---bar
+
+---
+
+(program
+    (apply3
+	    (apply1
+	        (id
+	        	(dollar))
+	        (apply1
+		        (id
+		            (dollar))
+		        (id
+		            (dollar))))
+	    (apply1
+	        (id
+	        	(dash))
+	        (apply1
+		        (id
+		            (dash))
+		        (id
+		            (dash))))))
+
+
+===========
+Have suffix
+===========
+
+foo? foo?? foo???
+bar' bar'' bar'''
+baz?' baz??' baz?'' baz??''
+
+---
+
+(program
+    (apply3
+	    (apply1
+	        (id
+	        	(question))
+	        (apply1
+		        (id
+		            (question))
+		        (id
+		            (question))))
+    (apply3
+        (apply1
+	        (id
+	            (prime))
+	        (apply1
+	            (id
+	            	(prime))
+	            (id
+	            	(prime))))
+        (apply1
+        	(id
+            	(question))
+	        (apply1
+	            (id
+	            	(question))
+	            (apply1
+		            (id
+		                (question))
+		            (id
+		                (question))))))))
+
+===============
+Prefix + suffix
+===============
+
+--foo/bar? $foo+bar'
+
+---
+
+(program
+	(apply1
+		(id
+		    (dash)
+		    (question))
+		(id
+		    (dollar)
+		    (prime))))
+
+==========
+Not prefix
+==========
+
+-$foo $-bar
+
+---
+
+(program
+    (ERROR
+        (dash))
+    (apply1
+        (id
+            (dollar))
+        (ERROR
+            (dollar))
+        (id
+            (dash))))
+
+==========
+Not suffix
+==========
+
+foo'?
+
+---
+
+(ERROR
+    (id
+        (prime))
+    (UNEXPECTED '\n'))

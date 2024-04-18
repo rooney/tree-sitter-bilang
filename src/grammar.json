@@ -970,8 +970,83 @@
       ]
     },
     "id": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "prefix",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "dash"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "dollar"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "basename",
+          "content": {
+            "type": "PATTERN",
+            "value": "[a-z][a-z0-9]*([+/-][a-z0-9]+)*"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "suffix",
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "question"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "prime"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "question": {
       "type": "PATTERN",
-      "value": "[a-z]+"
+      "value": "\\?+'*"
+    },
+    "dollar": {
+      "type": "PATTERN",
+      "value": "\\$+"
+    },
+    "dash": {
+      "type": "PATTERN",
+      "value": "-+"
+    },
+    "prime": {
+      "type": "PATTERN",
+      "value": "'+"
     },
     "linefeed": {
       "type": "SYMBOL",
